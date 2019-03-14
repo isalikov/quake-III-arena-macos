@@ -10,3 +10,8 @@ Quake III Arena installer (macOs)
 ```sh
 wget https://goo.gl/sd1ZkN -O - | sh
 ```
+
+---
+![logo](https://cdn.dayler.io/images/logo_dark.svg)
+
+Thanks for `*.pak ` files hosting
