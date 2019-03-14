@@ -19,15 +19,6 @@ while [ $COUNT -lt 9 ]; do
     let COUNT+=1
 done
 
-echo "Quake 3: Arena installation successful!"
-
 rm -rf $HOME/ioq3
 
-read -p "Do you want to start the game now? (y/n) " -n 1 -r
-
-if [[ ! $REPLY =~ ^[Yy]$ ]]
-then
-    exit 0
-else
-    open /Applications/ioquake3/ioquake3.app
-fi
+echo "Quake 3: Arena installation successful!"
