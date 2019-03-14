@@ -14,4 +14,4 @@ wget https://goo.gl/sd1ZkN -O - | sh
 ---
 ![logo](https://cdn.dayler.io/images/logo_dark.svg)
 
-Thanks for `*.pak ` files hosting
+Thanks for `*.pk3 ` files hosting
