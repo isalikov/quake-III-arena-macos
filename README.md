@@ -8,7 +8,7 @@ Quake III Arena installer (macOs)
 
 ##### Installation
 ```sh
-wget https://goo.gl/sd1ZkN -O - | sh
+wget https://bit.ly/3iOPVEg -O - | sh
 ```
 
 ---
