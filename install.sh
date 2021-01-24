@@ -15,7 +15,7 @@ cd /Applications/ioquake3/baseq3
 
 COUNT=0
 while [ $COUNT -lt 9 ]; do
-    curl https://q3.dayler.io/pak$COUNT.pk3 > pak$COUNT.pk3
+    curl -L http://files.anitalink.com/gamecache/quake3/baseq3/pak$COUNT.pk3 > pak$COUNT.pk3
     let COUNT+=1
 done
 
