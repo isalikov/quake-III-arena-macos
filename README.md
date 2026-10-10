@@ -1,93 +1,96 @@
 # Quake III Arena for macOS
 
-Установщик полной Quake III Arena на современный macOS, включая **M3 Pro** и
-другие Apple Silicon Mac. Собирает ioquake3 как универсальное приложение
-**arm64 + x86_64**: на Apple Silicon игра работает нативно, без Rosetta.
+Install the full Quake III Arena game on modern macOS, including **M3 Pro** and
+other Apple Silicon Macs. The installer builds ioquake3 as a universal
+**arm64 + x86_64** application: it runs natively on Apple Silicon, without Rosetta.
 
-## Установка
+## Installation
 
-Требуются macOS 11 или новее, Command Line Tools, CMake, интернет и около 2 ГБ
-свободного места. Homebrew нужен только для установки CMake:
+Requires macOS 11 or later, Xcode Command Line Tools, CMake, an internet connection,
+and about 2 GB of free disk space. Homebrew is only needed if you use it to install
+CMake. These tools must already be installed before running the installer.
+
+Run this single command in Terminal as your normal user, without `sudo`:
 
 ```bash
-xcode-select --install # если инструменты ещё не установлены
-brew install cmake
-
-git clone https://github.com/isalikov/quake-III-arena-macos.git
-cd quake-III-arena-macos
-bash install.sh
+curl -fsSL https://raw.githubusercontent.com/isalikov/quake-III-arena-macos/master/install.sh | bash
 ```
 
-Запускайте через **bash**, без `sudo`. Старый способ через короткую ссылку и
-`| sh` больше не используйте.
-
-Игра устанавливается в `~/Applications/ioquake3`. Запуск:
+The game is installed in `~/Applications/ioquake3`. Launch it with:
 
 ```bash
 open "$HOME/Applications/ioquake3/ioquake3.app"
 ```
 
-## Игровые файлы
+## Game files
 
-Установщик автоматически получает **все девять `baseq3/pak0.pk3`–`pak8.pk3`**:
-карты, текстуры, модели, звуки, музыку, ботов и игровые QVM.
+The installer automatically obtains **all nine `baseq3/pak0.pk3`–`pak8.pk3` files**:
+maps, textures, models, sounds, music, bots, and game QVMs.
 
-- `pak0.pk3` — [зеркало nrempel/q3-server](https://github.com/nrempel/q3-server/tree/master/baseq3)
-  по HTTPS; сначала проверяются уже установленная игра и стандартная папка Steam.
-- `pak1.pk3`–`pak8.pk3` — [официальные патчи ioquake3](https://ioquake3.org/extras/patch-data/).
-  Из того же архива устанавливаются `missionpack/pak1.pk3`–`pak3.pk3`.
-  Для игры в Team Arena дополнительно нужен её собственный `missionpack/pak0.pk3`.
+- `pak0.pk3` comes from the [nrempel/q3-server mirror](https://github.com/nrempel/q3-server/tree/master/baseq3)
+  over HTTPS. The installer checks an existing game installation and the standard
+  Steam folder first.
+- `pak1.pk3`–`pak8.pk3` come from the [official ioquake3 patches](https://ioquake3.org/extras/patch-data/).
+  The same archive supplies `missionpack/pak1.pk3`–`pak3.pk3`.
+  Playing Team Arena also requires its own `missionpack/pak0.pk3`.
 
-Игровые данные относятся к коммерческой Quake III Arena; нужна собственная
-копия игры. Условия патчей опубликованы на странице загрузки ioquake3.
-Зеркало не является официальным сервером id Software.
+The game data belongs to the commercial Quake III Arena release; you must own a
+copy of the game. Patch terms are published on the ioquake3 download page.
+The mirror is not an official id Software server.
 
-Загрузки проверяются по SHA-256, каждый основной PK3 — как ZIP-архив.
-HTTP-ошибки и повреждённые файлы останавливают установку до обновления игры.
-Проверенные загрузки кешируются, при повторном запуске конфиги и дополнительные
-моды сохраняются. Пользовательские настройки находятся в
+Downloads are verified using SHA-256, and each baseq3 PK3 is checked as a ZIP
+archive. HTTP errors and corrupt files stop installation before the existing game
+is updated. Verified downloads are cached; rerunning the installer preserves
+configuration files and additional mods. User settings are stored in
 `~/Library/Application Support/Quake3`.
 
-## Настройки
+## Options
+
+Set environment variables on `bash` to customize the one-command installation:
 
 ```bash
-# Другая папка установки (должна быть доступна на запись):
-Q3_INSTALL_DIR="$HOME/Games/Quake3" bash install.sh
+# Use a different installation directory (must be writable):
+curl -fsSL https://raw.githubusercontent.com/isalikov/quake-III-arena-macos/master/install.sh | Q3_INSTALL_DIR="$HOME/Games/Quake3" bash
 
-# Собственный pak0.pk3 вместо загрузки:
-Q3_PAK0="/path/to/baseq3/pak0.pk3" bash install.sh
+# Use your own pak0.pk3 instead of downloading it:
+curl -fsSL https://raw.githubusercontent.com/isalikov/quake-III-arena-macos/master/install.sh | Q3_PAK0="/path/to/baseq3/pak0.pk3" bash
 
-# Другое HTTPS-зеркало того же retail pak0.pk3:
-Q3_PAK0_URL="https://your-mirror.example/baseq3/pak0.pk3" bash install.sh
+# Use another HTTPS mirror of the same retail pak0.pk3:
+curl -fsSL https://raw.githubusercontent.com/isalikov/quake-III-arena-macos/master/install.sh | Q3_PAK0_URL="https://your-mirror.example/baseq3/pak0.pk3" bash
 ```
 
-Также доступны `Q3_CACHE_DIR`, `Q3_PATCH_URL` (зеркало оригинального
-`quake3-latest-pk3s.zip`) и `Q3_JOBS` (число параллельных процессов сборки).
-Контрольные суммы при смене зеркала остаются обязательными.
+Other available variables are `Q3_CACHE_DIR`, `Q3_PATCH_URL` (a mirror of the
+original `quake3-latest-pk3s.zip`), and `Q3_JOBS` (the number of parallel build
+jobs). Checksum verification remains mandatory when using a different mirror.
 
-Движок закреплён на коммите
+The engine is pinned to commit
 [`83a7762`](https://github.com/ioquake/ioq3/commit/83a776283bdb958f82db25554b5ed0966aaf6e49)
-для воспроизводимой сборки. SDL2 и оба OpenGL-рендерера входят в приложение.
-Установщик проверяет наличие нативной архитектуры и подписывает приложение
-локальной ad-hoc подписью с разрешением для QVM JIT.
+for reproducible builds. SDL2 and both OpenGL renderers are bundled with the app.
+The installer verifies native architecture support and applies a local ad hoc
+signature with the QVM JIT entitlement.
 
-Если macOS не разрешает запуск, используйте «Открыть» в контекстном меню
-приложения или разрешите его в «Системные настройки → Конфиденциальность и
-безопасность». При ошибке сети повторите `bash install.sh`: проверенный кеш
-используется повторно. Справка: `bash install.sh --help`.
+If macOS blocks launch, choose “Open” from the app's context menu or allow it in
+“System Settings → Privacy & Security”. If a network error occurs, rerun the
+installation command: verified cached downloads will be reused. For help, run:
 
-## Проверка установщика
+```bash
+curl -fsSL https://raw.githubusercontent.com/isalikov/quake-III-arena-macos/master/install.sh | bash -s -- --help
+```
+
+## Installer verification
+
+From a local checkout of this repository, run:
 
 ```bash
 bash -n install.sh
 python3 tests/test_installer.py
 ```
 
-Интеграционные тесты работают без сети и компилятора в изолированных временных
-папках. Проверяют полный комплект PK3, повторную установку из кеша,
-сохранение конфигов, ошибки HTTP и SHA-256, неверную архитектуру, откат
-приложения при ошибке копирования и использование локального pak0.
+Integration tests run without network access or a compiler in isolated temporary
+directories. They check the complete PK3 set, reinstallation from cache,
+configuration preservation, HTTP and SHA-256 errors, incorrect architecture,
+app rollback after a copy failure, and use of a local pak0.
 
-Проверено на Apple M3 Pro с macOS 27.0.1: полный запуск обновлённого
-установщика, загрузка карты `q3dm1` через OpenGL 4.1 (`GL_RENDERER: Apple M3 Pro`),
-чтение 4073 файлов из девяти PK3 и штатный выход из игры с кодом 0.
+Verified on an Apple M3 Pro running macOS 27.0.1: a complete run of the updated
+installer, loading the `q3dm1` map through OpenGL 4.1 (`GL_RENDERER: Apple M3 Pro`),
+reading 4,073 files from nine PK3 archives, and a clean game exit with code 0.
